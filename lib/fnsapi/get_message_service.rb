@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'base_service'
-
 module FnsApi
   class GetMessageService < BaseService
     include KktConcern

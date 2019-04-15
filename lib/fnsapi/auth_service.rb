@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'base_service'
-
 module FnsApi
   class AuthService < BaseService
     def reset_credentials

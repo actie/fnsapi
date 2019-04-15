@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'tmp_credentials'
-
 module FnsApi
   class RequestError < StandardError; end
   class NotImplementedError < StandardError; end

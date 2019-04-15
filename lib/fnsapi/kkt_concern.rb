@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'auth_service'
-
 module FnsApi
   module KktConcern
     def auth_params(user)
