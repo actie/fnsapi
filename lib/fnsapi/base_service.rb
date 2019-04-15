@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-module FnsApi
+require 'savon'
+
+module Fnsapi
   class RequestError < StandardError; end
   class NotImplementedError < StandardError; end
 
@@ -28,9 +30,9 @@ module FnsApi
     end
 
     def redis
-      return false unless configuration.redis_url
+      return false unless Fnsapi.configuration.redis_url
 
-      @redis ||= Redis.new(url: configuration.redis_url)
+      @redis ||= Redis.new(url: Fnsapi.configuration.redis_url)
     end
 
     def tmp_credentials
@@ -39,14 +41,14 @@ module FnsApi
 
     def token
       if redis
-        redis.get(configuration.redis_key)
+        redis.get(Fnsapi.configuration.redis_key)
       else
         tmp_credentials.token
       end
     end
 
     def fns_url
-      "#{configuration.fns_host}:#{configuration.fns_port}"
+      "#{Fnsapi.configuration.fns_host}:#{Fnsapi.configuration.fns_port}"
     end
   end
 end

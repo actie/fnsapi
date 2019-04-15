@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module FnsApi
+module Fnsapi
   class AuthService < BaseService
     def reset_credentials
       result = client.call(:get_message, message: message_hash)

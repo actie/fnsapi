@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module FnsApi
+module Fnsapi
   class KktService < BaseService
     include KktConcern
 

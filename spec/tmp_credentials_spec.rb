@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'date'
-
 RSpec.describe Fnsapi::TmpCredentials do
   class StubbedFile
     def truncate(_); end
