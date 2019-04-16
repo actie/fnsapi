@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
+require 'pry'
 require 'fnsapi/version'
 require 'fnsapi/configuration'
+require 'fnsapi/tmp_credentials'
+require 'fnsapi/base_service'
 require 'fnsapi/auth_service'
+require 'fnsapi/kkt_concern'
+require 'fnsapi/get_message_service'
 require 'fnsapi/kkt_service'
 
 module Fnsapi

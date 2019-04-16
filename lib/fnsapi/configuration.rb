@@ -10,6 +10,9 @@ module Fnsapi
                   :redis_url,
                   :tmp_file_name
 
+    attr_writer :fnsapi_user_token,
+                :fnsapi_master_key
+
     def initialize
       @fns_host = 'https://openapi.nalog.ru'
       @fns_port = 8090

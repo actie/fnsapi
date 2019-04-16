@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'auth_service'
-
-module FnsApi
+module Fnsapi
   module KktConcern
     def auth_params(user)
       refresh_credentials! unless token
