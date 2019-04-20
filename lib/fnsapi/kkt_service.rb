@@ -8,7 +8,7 @@ module Fnsapi
       result = client(auth_params(user_id)).call(:send_message, message: check_ticket_hash(ticket))
       message_id = result.body.dig(:send_message_response, :message_id)
 
-      message = parse_message(message_id, user)
+      message = parse_message(message_id, user_id)
       return unless message
 
       code = message.dig(:check_ticket_response, :result, :code)
@@ -19,13 +19,13 @@ module Fnsapi
       result = client(auth_params(user_id)).call(:send_message, message: get_ticket_hash(ticket))
       message_id = result.body.dig(:send_message_response, :message_id)
 
-      message = parse_message(message_id, user)
+      message = parse_message(message_id, user_id)
       return unless message
 
       code = message.dig(:get_ticket_response, :result, :code)
       return code if code != '200'
 
-      JSON.parse(message.dig(:get_ticket_response, :result, :ticket)).deep_symbolize_keys
+      JSON.parse(message.dig(:get_ticket_response, :result, :ticket))
     end
 
     private
@@ -73,7 +73,7 @@ module Fnsapi
         'tns:Fn' => ticket.fn,
         'tns:FiscalDocumentId' => ticket.fd,
         'tns:FiscalSign' => ticket.pfd,
-        'tns:Date' => ticket.purchase_date.in_time_zone('Europe/Moscow').strftime('%FT%T'),
+        'tns:Date' => ticket.purchase_date.strftime('%FT%T'),
         'tns:Sum' => ticket.amount_cents,
         'tns:TypeOperation' => 1
       }
