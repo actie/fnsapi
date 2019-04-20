@@ -35,15 +35,15 @@ module Fnsapi
       @redis ||= Redis.new(url: Fnsapi.configuration.redis_url)
     end
 
-    def tmp_credentials
-      @tmp_credentials ||= TmpStorage.new
+    def tmp_storage
+      @tmp_storage ||= TmpStorage.new
     end
 
     def token
       if redis
         redis.get(Fnsapi.configuration.redis_key)
       else
-        tmp_credentials.token
+        tmp_storage.token
       end
     end
 

@@ -14,3 +14,22 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+class StubbedFile
+  def truncate(_); end
+  def write(_); end
+  def rewind; end
+  def read; end
+end
+
+class StubbedTmpStorage
+  def initialize; end
+  def write_token(_, _); end
+  def token; end
+end
+
+class Redis
+  def initialize(_); end
+  def set(_, _); end
+  def expireat(_, _); end
+end

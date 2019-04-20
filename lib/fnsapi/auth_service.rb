@@ -6,7 +6,7 @@ module Fnsapi
       result = client.call(:get_message, message: message_hash)
       message = result.body.dig(:get_message_response, :message)
 
-      raise RequestError, message[:fault][:message] if message[:fault].present?
+      raise RequestError, message[:fault][:message] if message[:fault]
 
       token = message.dig(:auth_response, :result, :token)
       expired_at = message.dig(:auth_response, :result, :expire_time)
@@ -35,7 +35,7 @@ module Fnsapi
         'Message' => {
           'tns:AuthRequest' => {
             'tns:AuthAppInfo' => {
-              'tns:MasterToken' => configuration.fnsapi_master_key
+              'tns:MasterToken' => Fnsapi.configuration.fnsapi_master_key
             }
           }
         }
@@ -44,10 +44,10 @@ module Fnsapi
 
     def put_token!(token, expired_at)
       if redis
-        redis.set(configuration.redis_key, token)
-        redis.expireat(configuration.redis_key, expired_at.to_i)
+        redis.set(Fnsapi.configuration.redis_key, token)
+        redis.expireat(Fnsapi.configuration.redis_key, expired_at.strftime('%s').to_i)
       else
-        tmp_credentials.write_token(token, expired_at)
+        tmp_storage.write_token(token, expired_at)
       end
     end
   end

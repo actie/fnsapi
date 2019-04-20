@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe Fnsapi::TmpStorage do
-  class StubbedFile
-    def truncate(_); end
-    def write(_); end
-    def rewind; end
-    def read; end
-  end
-
   let(:instance) { described_class.new }
 
   before { allow(File).to receive(:open).and_return(StubbedFile.new) }
