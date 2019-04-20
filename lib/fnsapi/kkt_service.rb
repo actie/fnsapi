@@ -4,8 +4,8 @@ module Fnsapi
   class KktService < BaseService
     include KktConcern
 
-    def check_data(ticket, user)
-      result = client(auth_params(user)).call(:send_message, message: check_ticket_hash(ticket))
+    def check_data(ticket, user_id = 'default_user')
+      result = client(auth_params(user_id)).call(:send_message, message: check_ticket_hash(ticket))
       message_id = result.body.dig(:send_message_response, :message_id)
 
       message = parse_message(message_id, user)
@@ -15,8 +15,8 @@ module Fnsapi
       code == '200'
     end
 
-    def get_data(ticket, user)
-      result = client(auth_params(user)).call(:send_message, message: get_ticket_hash(ticket))
+    def get_data(ticket, user_id = 'default_user')
+      result = client(auth_params(user_id)).call(:send_message, message: get_ticket_hash(ticket))
       message_id = result.body.dig(:send_message_response, :message_id)
 
       message = parse_message(message_id, user)
@@ -30,9 +30,9 @@ module Fnsapi
 
     private
 
-    def parse_message(message_id, user)
+    def parse_message(message_id, user_id)
       5.times do |i|
-        response = GetMessageService.new.call(message_id, user)
+        response = GetMessageService.new.call(message_id, user_id)
         return response[:message] if response[:processing_status] == 'COMPLETED'
 
         sleep(i)

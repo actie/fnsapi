@@ -42,7 +42,7 @@ RSpec.describe Fnsapi::GetMessageService do
       allow_any_instance_of(Savon::Client).to receive(:call) { stubbed_response }
     end
 
-    subject(:call) { instance.call(message_id) }
+    subject(:call) { instance.call(message_id, 123) }
 
     context 'when token is not defined' do
       it 'calls reset_credentials from AuthService' do
@@ -56,34 +56,16 @@ RSpec.describe Fnsapi::GetMessageService do
         allow_any_instance_of(StubbedTmpStorage).to receive(:token) { 'token' }
       end
 
-      context 'when user is not specified' do
-        it 'initializes client with auth_params' do
-          expect(Savon).to receive(:client).with(
-            hash_including(
-              headers: {
-                'FNS-OpenApi-Token' => 'token',
-                'FNS-OpenApi-UserToken' => Base64.strict_encode64('default_user'.to_s)
-              }
-            )
-          ).and_call_original
-          call
-        end
-      end
-
-      context 'when user is specified' do
-        subject(:call) { instance.call(message_id, 123) }
-
-        it 'initializes client with auth_params' do
-          expect(Savon).to receive(:client).with(
-            hash_including(
-              headers: {
-                'FNS-OpenApi-Token' => 'token',
-                'FNS-OpenApi-UserToken' => Base64.strict_encode64(123.to_s)
-              }
-            )
-          ).and_call_original
-          call
-        end
+      it 'initializes client with auth_params' do
+        expect(Savon).to receive(:client).with(
+          hash_including(
+            headers: {
+              'FNS-OpenApi-Token' => 'token',
+              'FNS-OpenApi-UserToken' => Base64.strict_encode64(123.to_s)
+            }
+          )
+        ).and_call_original
+        call
       end
 
       it 'calls :get_message with correct parameters' do
