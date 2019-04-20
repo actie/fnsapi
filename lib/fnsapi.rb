@@ -3,7 +3,7 @@
 require 'pry'
 require 'fnsapi/version'
 require 'fnsapi/configuration'
-require 'fnsapi/tmp_credentials'
+require 'fnsapi/tmp_storage'
 require 'fnsapi/base_service'
 require 'fnsapi/auth_service'
 require 'fnsapi/kkt_concern'

@@ -36,7 +36,7 @@ module Fnsapi
     end
 
     def tmp_credentials
-      @tmp_credentials ||= TmpCredentials.new
+      @tmp_credentials ||= TmpStorage.new
     end
 
     def token
