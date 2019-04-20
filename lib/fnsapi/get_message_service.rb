@@ -4,8 +4,8 @@ module Fnsapi
   class GetMessageService < BaseService
     include KktConcern
 
-    def call(message_id, user)
-      result = client(auth_params(user)).call(:get_message, message: message_hash(message_id))
+    def call(message_id, user_id = 'default_user')
+      result = client(auth_params(user_id)).call(:get_message, message: message_hash(message_id))
       result.body.dig(:get_message_response)
     end
 
