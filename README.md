@@ -47,8 +47,8 @@ fnsapi_master_key
 
 There are two main methods:
 ```ruby
-Fnsapi::KktService.new.check_data(ticket, user_id)
-Fnsapi::KktService.new.get_data(ticket, user_id)
+Fnsapi.check_data(ticket, user_id)
+Fnsapi.get_data(ticket, user_id)
 ```
 The first one checks if your data is correct and returns `true` or `false`. The second one returns the tickets data from FNS if your tickets data is correct (it's strange that you should send most parts of data that you want to receive, but it's the API we have)
 

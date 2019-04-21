@@ -18,5 +18,13 @@ module Fnsapi
     def configure
       yield(configuration)
     end
+
+    def check_data(ticket, user_id = 'default_user')
+      Fnsapi::KktService.new.check_data(ticket, user_id)
+    end
+
+    def get_data(ticket, user_id = 'default_user')
+      Fnsapi::KktService.new.get_data(ticket, user_id)
+    end
   end
 end
