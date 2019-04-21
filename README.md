@@ -17,7 +17,7 @@ And then execute:
 
     $ bundle
 
-##Configuration
+## Configuration
 
 You can configure this gem in `config/initializers/fnsapi.rb`:
 
@@ -53,6 +53,7 @@ Fnsapi::KktService.new.get_data(ticket, user_id)
 The first one checks if you data is correct and returns `true` or `false`. The second one returns the tickets data from FNS if your ticket data is correct (it's strange that you should send most parts of data that you want to receive, but it's the API we have)
 
 `ticket` should be an object which impement several methods:
+
 ```
 fn - Fiscal number
 fd - Fiscal document id
@@ -60,15 +61,12 @@ pfd - Fiscal signature
 purchase_date - Ticket purchase date with time (we have tested for Moscow timezone but this point is not documented, and FNS API don't acept time with timezone, so I don't sure what timezone can you use.)
 amount_cents - Ticket amount (integer) in cents
 ```
-## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+`user_id` - is an optional parameter. You can send the indentificator for user in you system if you want to specify which person do this request. In other way it has a default value `'default_user'`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/fnsapi.
+Bug reports and pull requests are welcome on GitHub at https://github.com/actie/fnsapi.
 
 ## License
 
