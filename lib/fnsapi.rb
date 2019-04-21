@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 require 'fnsapi/version'
 require 'fnsapi/configuration'
 require 'fnsapi/tmp_storage'
