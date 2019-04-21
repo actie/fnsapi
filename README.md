@@ -9,21 +9,57 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fnsapi'
+gem 'fnsapi', git: 'https://github.com/actie/fnsapi.git'
 ```
+Maybe later we will release it on rubygems to.
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+##Configuration
 
-    $ gem install fnsapi
+You can configure this gem in `config/initializers/fnsapi.rb`:
+
+```ruby
+Fnsapi.configure do |config|
+  config.redis_url = ENV.fetch('REDIS_URL')
+  config.fnsapi_master_key = ENV.fetch('FNS_API_MASTER_KEY')
+  config.fnsapi_user_token = ENV.fetch('FNS_API_USER_TOKEN')
+end
+```
+
+The only one parameter, which you must specify is `fnsapi_master_key`.
+And if you want to store temporrary credentials in redis specify `redis_url`. If you don't they will be stored in tmp file.
+
+All other configurations have default values, but you can change them. The full parameters list:
+```
+fns_host
+fns_port
+redis_key
+redis_url
+tmp_file_name
+fnsapi_user_token
+fnsapi_master_key
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+There are two main methods:
+```ruby
+Fnsapi::KktService.new.check_data(ticket, user_id)
+Fnsapi::KktService.new.get_data(ticket, user_id)
+```
+The first one checks if you data is correct and returns `true` or `false`. The second one returns the tickets data from FNS if your ticket data is correct (it's strange that you should send most parts of data that you want to receive, but it's the API we have)
 
+`ticket` should be an object which impement several methods:
+```
+fn - Fiscal number
+fd - Fiscal document id
+pfd - Fiscal signature
+purchase_date - Ticket purchase date with time (we have tested for Moscow timezone but this point is not documented, and FNS API don't acept time with timezone, so I don't sure what timezone can you use.)
+amount_cents - Ticket amount (integer) in cents
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
