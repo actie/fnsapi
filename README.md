@@ -1,19 +1,18 @@
 # Fnsapi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fnsapi`. To experiment with that code, run `bin/console` for an interactive prompt.
+Gem implements API with Federal Tax services of Russia.
 
-TODO: Delete this and the text above, and describe your gem
+Гем реализуют взаимодействие с официальным апи проверки чеков Федеральной Налоговая службы России. Чтобы получить токен неоходимо подать заявку на сайте ФНС. [Документация для получения токена](https://www.nalog.ru/files/kkt/pdf/%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F.pdf). [Бесплатный вариант работы с базой ФНС](https://habr.com/ru/post/358966/). При большом колиечестве проверок, работает не стабильно.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fnsapi', git: 'https://github.com/actie/fnsapi.git'
+gem 'fnsapi', github: 'actie/fnsapi'
 ```
-Maybe later we will release it on rubygems to.
 
-And then execute:
+Then:
 
     $ bundle
 
@@ -30,9 +29,9 @@ end
 ```
 
 The only one parameter, which you must specify is `fnsapi_master_key`.
-And if you want to store temporrary credentials in redis specify `redis_url`. If you don't they will be stored in tmp file.
+And if you want to store temporary credentials in redis specify `redis_url`. If you don't credentials will be stored in the tmp file.
 
-All other configurations have default values, but you can change them. The full parameters list:
+The full parameters list for configuration:
 ```
 fns_host
 fns_port
@@ -45,14 +44,15 @@ fnsapi_master_key
 
 ## Usage
 
-There are two main methods:
+There are two methods:
 ```ruby
-Fnsapi.check_data(ticket, user_id)
+ # Is check data correct?
+Fnsapi.check_data(ticket, user_id) # true / false
+# Give me full information about check: products, INN etc.
 Fnsapi.get_data(ticket, user_id)
 ```
-The first one checks if your data is correct and returns `true` or `false`. The second one returns the tickets data from FNS if your tickets data is correct (it's strange that you should send most parts of data that you want to receive, but it's the API we have)
 
-`ticket` should be an object which implements several methods:
+`ticket` should be an object which implements methods:
 
 ```
 fn - Fiscal number
@@ -62,7 +62,7 @@ purchase_date - Ticket purchase date with time (we have tested for Moscow timezo
 amount_cents - Ticket amount (integer) in cents
 ```
 
-`user_id` - is an optional parameter. You can send the indentificator for user in you system if you want to specify which person do this request. In other way it has a default value `'default_user'`.
+`user_id` - is an optional parameter. You can send the ID for user in you system if you want to specify which person do this request. In other way it has a default value `'default_user'`.
 
 ## Contributing
 
