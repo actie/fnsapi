@@ -25,7 +25,7 @@ RSpec.describe Fnsapi::AuthService do
       }
     }
   end
-  let(:expired_at) { DateTime.now }
+  let(:expired_at) { Time.now }
   let(:stubbed_response) do
     OpenStruct.new(
       body: {
@@ -34,7 +34,7 @@ RSpec.describe Fnsapi::AuthService do
             auth_response: {
               result: {
                 token: 'token',
-                expire_time: expired_at
+                expire_time: expired_at.to_s
               }
             }
           }
@@ -120,7 +120,7 @@ RSpec.describe Fnsapi::AuthService do
       end
 
       it 'sets expired_at in redis' do
-        expect_any_instance_of(Redis).to receive(:expireat).with(:fnsapi_token, expired_at.strftime('%s').to_i)
+        expect_any_instance_of(Redis).to receive(:expireat).with(:fnsapi_token, expired_at.to_i)
         reset_credentials
       end
     end
@@ -132,7 +132,7 @@ RSpec.describe Fnsapi::AuthService do
       end
 
       it 'saves token to tmp_storage' do
-        expect_any_instance_of(StubbedTmpStorage).to receive(:write_token).with('token',expired_at)
+        expect_any_instance_of(StubbedTmpStorage).to receive(:write_token).with('token', Time.at(expired_at.to_i))
         reset_credentials
       end
     end

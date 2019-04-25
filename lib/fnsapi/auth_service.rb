@@ -9,7 +9,7 @@ module Fnsapi
       raise RequestError, message[:fault][:message] if message[:fault]
 
       token = message.dig(:auth_response, :result, :token)
-      expired_at = message.dig(:auth_response, :result, :expire_time)
+      expired_at = Time.parse(message.dig(:auth_response, :result, :expire_time))
 
       return if token.blank?
 
@@ -45,7 +45,7 @@ module Fnsapi
     def put_token!(token, expired_at)
       if redis
         redis.set(Fnsapi.configuration.redis_key, token)
-        redis.expireat(Fnsapi.configuration.redis_key, expired_at.strftime('%s').to_i)
+        redis.expireat(Fnsapi.configuration.redis_key, expired_at.to_i)
       else
         tmp_storage.write_token(token, expired_at)
       end
