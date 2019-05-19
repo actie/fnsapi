@@ -4,7 +4,8 @@ module Fnsapi
   class KktService < BaseService
     include KktConcern
 
-    def check_data(ticket, user_id = 'default_user')
+    def check_data(object, user_id = 'default_user')
+      ticket = Ticket.new(object)
       result = client(auth_params(user_id)).call(:send_message, message: check_ticket_hash(ticket))
       message_id = result.body.dig(:send_message_response, :message_id)
 
@@ -15,7 +16,8 @@ module Fnsapi
       code == '200'
     end
 
-    def get_data(ticket, user_id = 'default_user')
+    def get_data(object, user_id = 'default_user')
+      ticket = Ticket.new(object)
       result = client(auth_params(user_id)).call(:send_message, message: get_ticket_hash(ticket))
       message_id = result.body.dig(:send_message_response, :message_id)
 
