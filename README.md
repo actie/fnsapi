@@ -33,16 +33,21 @@ end
 The only one parameter, which you must specify is `fnsapi_master_key`.
 And if you want to store temporary credentials in redis specify `redis_url`. If you don't credentials will be stored in the tmp file.
 
-The full parameters list for configuration:
+The full parameters list for configuration with default values:
 ```
-fns_host
-fns_port
-redis_key
-redis_url
-tmp_file_name
-fnsapi_user_token
-fnsapi_master_key
+fns_host = 'https://openapi.nalog.ru'
+fns_port = 8090
+redis_key = :fnsapi_token
+redis_url = nil
+tmp_file_name = 'fnsapi_tmp_credentials'
+fnsapi_master_key = nil
+fnsapi_user_token = nil
+get_message_timeout = 60
 ```
+
+### get message timeout
+
+FNS provides us an asynchronous API. So, we need to make two requests: first to generate the message, and second to receive it. And there is a timeout on a server side. It's possible to download the message only within around the 60 seconds after request. We use the[exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) with 60 seconds timeout. You can specify the different value but if it is too big, you'll just receive the TimeoutException from FNS backend.
 
 ## Usage
 

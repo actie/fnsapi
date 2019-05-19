@@ -118,15 +118,11 @@ RSpec.describe Fnsapi::KktService do
 
       context 'when processing_status is not COMPLETED' do
         before do
+          allow_any_instance_of(Fnsapi::Configuration).to receive(:get_message_timeout).and_return(10)
           allow_any_instance_of(Fnsapi::GetMessageService).to(
             receive(:call).and_return(processing_status: 'PROCESSED', message: get_message_result)
           )
         end
-
-        # it 'retries 5 times' do
-        #   expect_any_instance_of(Fnsapi::GetMessageService).to receive(:call)
-        #   subject
-        # end
 
         it 'raises Timeout exception' do
           expect { subject }.to raise_exception(Fnsapi::RequestError, 'Timeout reached')
