@@ -4,10 +4,10 @@ module Fnsapi
   class FieldValidationError < StandardError; end
 
   class Ticket
-    FIELDS = %i[fn fd pfd purchase_date amount_cents].freeze
+    attr_reader :fn, :fd, :pfd, :purchase_date, :amount_cents
 
     def initialize(object)
-      %[fn fd pfd].each do |field_name|
+      %i[fn fd pfd].each do |field_name|
         instance_variable_set("@#{field_name}", validated_field_value(object, field_name, [String]))
       end
 
