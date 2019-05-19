@@ -31,11 +31,20 @@ module Fnsapi
     private
 
     def parse_message(message_id, user_id)
-      5.times do |i|
+      wait_time = 0
+      i = 0
+
+      while true do
         response = GetMessageService.new.call(message_id, user_id)
         return response[:message] if response[:processing_status] == 'COMPLETED'
 
-        sleep(i)
+        timeout = (2**i - 1)/2
+        wait_time += timeout
+        i += 1
+
+        break if wait_time > Fnsapi.configuration.get_message_timeout
+
+        sleep(timeout)
       end
 
       raise RequestError, 'Timeout reached'

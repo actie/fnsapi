@@ -23,6 +23,10 @@ RSpec.describe Fnsapi::Configuration do
     it 'returns correct value for tmp_file_name' do
       expect(config.tmp_file_name).to eq('fnsapi_tmp_credentials')
     end
+
+     it 'returns correct value for get_message_timeout' do
+      expect(config.get_message_timeout).to eq(60)
+    end
   end
 
   describe 'writers' do
@@ -45,6 +49,12 @@ RSpec.describe Fnsapi::Configuration do
     it 'changes value for tmp_file_name' do
       expect { config.tmp_file_name = 'test' }.to(
         change { config.tmp_file_name }.from('fnsapi_tmp_credentials').to('test')
+      )
+    end
+
+    it 'changes value for get_message_timeout' do
+      expect { config.get_message_timeout = 10 }.to(
+        change { config.get_message_timeout }.from(60).to(10)
       )
     end
 

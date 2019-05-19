@@ -8,7 +8,8 @@ module Fnsapi
                   :fns_port,
                   :redis_key,
                   :redis_url,
-                  :tmp_file_name
+                  :tmp_file_name,
+                  :get_message_timeout
 
     attr_writer :fnsapi_user_token,
                 :fnsapi_master_key
@@ -21,6 +22,7 @@ module Fnsapi
       @tmp_file_name = 'fnsapi_tmp_credentials'
       @fnsapi_master_key = nil
       @fnsapi_user_token = nil
+      @get_message_timeout = 60
     end
 
     def fnsapi_user_token
