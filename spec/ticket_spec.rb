@@ -49,15 +49,14 @@ RSpec.describe Fnsapi::Ticket do
         end
       end
 
-      context 'when field has invalid type' do
+      context 'when field has nil state' do
         before do
-          ticket.purchase_date = 123
+          ticket.purchase_date = nil
         end
 
         it 'raises an exception' do
-          expect(ticket.purchase_date).to be_a(Integer)
           expect { described_class.new(ticket) }.to(
-            raise_error(Fnsapi::FieldValidationError, "purchase_date should be a type of String, or Time, or DateTime")
+            raise_error(Fnsapi::FieldNotSpecifiedError, "purchase_date should be specified")
           )
         end
       end
@@ -92,13 +91,12 @@ RSpec.describe Fnsapi::Ticket do
 
       context 'when field has invalid type' do
         before do
-          ticket[:purchase_date] = 123
+          ticket[:purchase_date] = nil
         end
 
         it 'raises an exception' do
-          expect(ticket[:purchase_date]).to be_a(Integer)
           expect { described_class.new(ticket) }.to(
-            raise_error(Fnsapi::FieldValidationError, "purchase_date should be a type of String, or Time, or DateTime")
+            raise_error(Fnsapi::FieldNotSpecifiedError, "purchase_date should be specified")
           )
         end
       end
