@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require 'fnsapi/ticket'
 require 'fnsapi/version'
 require 'fnsapi/configuration'
 require 'fnsapi/tmp_storage'
