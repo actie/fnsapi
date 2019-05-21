@@ -59,14 +59,14 @@ Fnsapi.check_data(ticket, user_id) # true / false
 Fnsapi.get_data(ticket, user_id)
 ```
 
-`ticket` should be an object which implements methods:
+`ticket` could be both an object which implements methods or hash with the same keys:
 
 ```
 fn - Fiscal number
 fd - Fiscal document id
 pfd - Fiscal signature
 purchase_date - Ticket purchase date with time (we have tested for Moscow timezone but this point is not documented, and FNS API don't acept time with timezone, so I don't sure what timezone can you use.)
-amount_cents - Ticket amount (integer) in cents
+amount_cents - Ticket amount in cents (Integer)
 ```
 
 `user_id` - is an optional parameter. You can send the ID for user in you system if you want to specify which person do this request. In other way it has a default value `'default_user'`.
