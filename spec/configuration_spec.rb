@@ -27,6 +27,29 @@ RSpec.describe Fnsapi::Configuration do
      it 'returns correct value for get_message_timeout' do
       expect(config.get_message_timeout).to eq(60)
     end
+
+    it 'returns correct value for log_enabled' do
+      expect(config.log_enabled).to eq(false)
+    end
+
+    it 'returns correct value for logger' do
+      expect(config.logger).to be_a(Logger)
+    end
+
+    context 'when used in Rails app' do
+      before do
+        class Rails; end
+
+        allow(Rails).to receive(:logger).and_return(Logger.new($stdout))
+      end
+
+      after { Object.send(:remove_const, :Rails) }
+
+      it 'uses Rails.logger' do
+        expect(Rails).to receive(:logger)
+        expect(config.logger).to be_a(Logger)
+      end
+    end
   end
 
   describe 'writers' do
@@ -50,6 +73,16 @@ RSpec.describe Fnsapi::Configuration do
       expect { config.tmp_file_name = 'test' }.to(
         change { config.tmp_file_name }.from('fnsapi_tmp_credentials').to('test')
       )
+    end
+
+    it 'changes value for log_enabled' do
+      expect { config.log_enabled = true }.to(
+        change { config.log_enabled }.from(false).to(true)
+      )
+    end
+
+    it 'changes value for logger' do
+      expect { config.logger = Logger.new($stdout) }.to(change { config.logger })
     end
 
     it 'changes value for get_message_timeout' do

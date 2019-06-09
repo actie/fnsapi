@@ -32,6 +32,10 @@ RSpec.describe Fnsapi::GetMessageService do
       expect(client).to be_kind_of(Savon::Client)
     end
 
+    it 'contains correct wsdl' do
+      expect(options[:wsdl]).to eq('https://openapi.nalog.ru:8090/open-api/ais3/KktService/0.1?wsdl')
+    end
+
     it 'contains correct namespaces' do
       expect(options[:namespaces]).to eq(correct_namespaces)
     end

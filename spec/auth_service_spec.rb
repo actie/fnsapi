@@ -58,10 +58,6 @@ RSpec.describe Fnsapi::AuthService do
     it 'contains correct namespaces' do
       expect(options[:namespaces]).to eq(correct_namespaces)
     end
-
-    it 'contains correct env_namespace' do
-      expect(options[:env_namespace]).to eq(:soap)
-    end
   end
 
   describe '#reset_credentials' do

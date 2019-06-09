@@ -9,7 +9,9 @@ module Fnsapi
                   :redis_key,
                   :redis_url,
                   :tmp_file_name,
-                  :get_message_timeout
+                  :get_message_timeout,
+                  :log_enabled,
+                  :logger
 
     attr_writer :fnsapi_user_token,
                 :fnsapi_master_key
@@ -23,6 +25,8 @@ module Fnsapi
       @fnsapi_master_key = nil
       @fnsapi_user_token = nil
       @get_message_timeout = 60
+      @logger = defined?(Rails) ? Rails.logger : Logger.new($stdout)
+      @log_enabled = false
     end
 
     def fnsapi_user_token

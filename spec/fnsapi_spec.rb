@@ -15,6 +15,7 @@ RSpec.describe Fnsapi do
     subject(:configure) do
       described_class.configure { |config| config.fns_port = 1234 }
     end
+    after { described_class.configure { |config| config.fns_port = 8090 } }
 
     it 'changes configuration parameters' do
       expect { configure }.to change { described_class.configuration.fns_port }.from(8090).to(1234)

@@ -46,11 +46,21 @@ tmp_file_name = 'fnsapi_tmp_credentials'
 fnsapi_master_key = nil
 fnsapi_user_token = nil
 get_message_timeout = 60
+log_enabled = false
+logger = Logger.new($stdout)
 ```
 
 ### get message timeout
 
 FNS provides us an asynchronous API. So, we need to make two requests: first to generate the message, and second to receive it. And there is a timeout on a server side. It's possible to download the message only within around the 60 seconds after request. We use the [exponential backoff algorithm](https://en.wikipedia.org/wiki/Exponential_backoff) with 60 seconds timeout. You can specify the different value but if it is too big, you'll just receive the TimeoutException from FNS backend.
+
+### log_enabled
+
+If this option id true, all SAVON logs will be written in logger.
+
+### logger
+
+By default it's a `stdout` stream but if you use this gem with Rails application, logger will be configurated as `Rails.logger` automaticaly.
 
 ## Usage
 
@@ -62,7 +72,7 @@ Fnsapi.check_data(ticket, user_id) # true / false
 Fnsapi.get_data(ticket, user_id)
 ```
 
-`ticket` could be both an object which implements methods or hash with the same keys:
+`ticket` could be both an object which implements methods or a hash with the same keys:
 
 ```
 fn - Fiscal number
