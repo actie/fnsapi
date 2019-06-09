@@ -21,7 +21,9 @@ module Fnsapi
       {
         wsdl: "#{fns_url}#{uri}",
         namespaces: namespaces,
-        env_namespace: :soap
+        env_namespace: :soap,
+        log: Fnsapi.configuration.log_enabled,
+        logger: Fnsapi.configuration.logger
       }.merge(additional_params)
     end
 
