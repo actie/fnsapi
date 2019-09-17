@@ -13,6 +13,7 @@ module Fnsapi
     end
 
     def token
+      @file = File.open(file_path, 'a+')
       data = JSON.parse(@file.read)
       expired_at = Time.parse(data['expire_at'])
 
