@@ -22,7 +22,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     nori (2.6.0)
     rack (2.2.2)
-    rake (12.3.2)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
