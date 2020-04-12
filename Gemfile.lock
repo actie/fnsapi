@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fnsapi (1.1.1)
+    fnsapi (1.1.2)
       savon
 
 GEM

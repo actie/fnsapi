@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.2]
+- Gems and security updates.
+
 ## [1.1.0]
 - Add log_enabled and logger configuration
 
