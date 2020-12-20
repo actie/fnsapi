@@ -48,6 +48,7 @@ fnsapi_user_token = nil
 get_message_timeout = 60
 log_enabled = false
 logger = Logger.new($stdout)
+proxy_url = nil
 ```
 
 ### get message timeout
@@ -61,6 +62,12 @@ If this option id true, all SAVON logs will be written in logger.
 ### logger
 
 By default it's a `stdout` stream but if you use this gem with Rails application, logger will be configurated as `Rails.logger` automaticaly.
+
+### proxy_url
+
+By default is not set. FNS API check requests permissions by IP address, if you have multiple servers, you can set up yor own proxy server and make requests from him.
+Example: `'http://user:pass@host.domain:port'` or other formats supported by `savon gem`
+
 
 ## Usage
 
