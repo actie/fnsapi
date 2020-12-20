@@ -106,8 +106,8 @@ RSpec.describe Fnsapi::Configuration do
     end
 
     it 'changes value for proxy_url' do
-      expect { config.proxy_url = 'http://user:pass@host' }.to(
-        change { config.proxy_url }.from(nil).to('http://user:pass@host')
+      expect { config.proxy_url = 'http://user:pass@host:3128' }.to(
+        change { config.proxy_url }.from(nil).to('http://user:pass@host:3128')
       )
     end
   end
