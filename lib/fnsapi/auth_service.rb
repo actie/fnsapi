@@ -9,7 +9,8 @@ module Fnsapi
       raise RequestError, message[:fault][:message] if message[:fault]
 
       token = message.dig(:auth_response, :result, :token)
-      expired_at = Time.parse(message.dig(:auth_response, :result, :expire_time))
+      expired_at_raw = message.dig(:auth_response, :result, :expire_time)
+      expired_at = expired_at_raw.is_a?(DateTime) ? expired_at_raw.to_time : Time.parse(expired_at_raw)
 
       return if token.blank?
 
