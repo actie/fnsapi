@@ -11,7 +11,8 @@ module Fnsapi
                   :tmp_file_name,
                   :get_message_timeout,
                   :log_enabled,
-                  :logger
+                  :logger,
+                  :proxy_url
 
     attr_writer :fnsapi_user_token,
                 :fnsapi_master_key

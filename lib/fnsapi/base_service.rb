@@ -23,7 +23,8 @@ module Fnsapi
         namespaces: namespaces,
         env_namespace: :soap,
         log: Fnsapi.configuration.log_enabled,
-        logger: Fnsapi.configuration.logger
+        logger: Fnsapi.configuration.logger,
+        proxy: Fnsapi.configuration.proxy_url
       }.merge(additional_params)
     end
 
