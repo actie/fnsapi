@@ -245,8 +245,8 @@ RSpec.describe Fnsapi::KktService do
             }
           }
         end
-        it 'returns code' do
-          expect(subject).to eq('400')
+        it 'raise error' do
+          expect { subject }.to raise_error(Fnsapi::FnsBadRequestError)
         end
       end
     end

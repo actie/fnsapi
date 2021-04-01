@@ -10,6 +10,7 @@ require 'fnsapi/auth_service'
 require 'fnsapi/kkt_concern'
 require 'fnsapi/get_message_service'
 require 'fnsapi/kkt_service'
+require 'fnsapi/exceptions'
 
 module Fnsapi
   class << self

@@ -4,6 +4,8 @@ module Fnsapi
   class KktService < BaseService
     include KktConcern
 
+    SUCCESS_STATUS_CODES = %w(200).freeze
+
     def check_data(object, user_id = 'default_user')
       ticket = Ticket.new(object)
       result = client(auth_params(user_id)).call(:send_message, message: check_ticket_hash(ticket))
@@ -25,7 +27,7 @@ module Fnsapi
       return unless message
 
       code = message.dig(:get_ticket_response, :result, :code)
-      return code if code != '200'
+      handle_response(code)
 
       JSON.parse(message.dig(:get_ticket_response, :result, :ticket))
     end
@@ -88,6 +90,23 @@ module Fnsapi
         'tns:Sum' => ticket.amount_cents,
         'tns:TypeOperation' => 1
       }
+    end
+
+    def handle_response(code)
+      return if SUCCESS_STATUS_CODES.include?(code)
+
+      case code
+      when '400'
+        raise ::Fnsapi::FnsBadRequestError
+      when '404'
+        raise ::Fnsapi::FnsNotFoundError
+      when '406'
+        raise ::Fnsapi::FnsCryptoProtectionError
+      when '503'
+        raise ::Fnsapi::FnsServiceUnaviableError
+      else
+        raise ::Fnsapi::FnsUnknownError
+      end
     end
   end
 end
