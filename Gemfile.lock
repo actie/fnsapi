@@ -25,7 +25,7 @@ GEM
     nori (2.6.0)
     public_suffix (4.0.6)
     rack (2.2.3)
-    rake (13.0.1)
+    rake (13.0.4)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
