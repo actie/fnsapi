@@ -36,6 +36,10 @@ RSpec.describe Fnsapi::Configuration do
       expect(config.logger).to be_a(Logger)
     end
 
+    it 'returns correct value for default proxy url' do
+      expect(config.proxy_url).to be_nil
+    end
+
     context 'when used in Rails app' do
       before do
         class Rails; end
@@ -99,6 +103,12 @@ RSpec.describe Fnsapi::Configuration do
     it 'changes value for fnsapi_user_token' do
       config.fnsapi_user_token = 'test'
       expect(config.fnsapi_user_token).to eq('test')
+    end
+
+    it 'changes value for proxy_url' do
+      expect { config.proxy_url = 'http://user:pass@host:3128' }.to(
+        change { config.proxy_url }.from(nil).to('http://user:pass@host:3128')
+      )
     end
   end
 
