@@ -13,6 +13,7 @@ module Fnsapi
     end
 
     def token
+      @file.rewind
       data = JSON.parse(@file.read)
       expired_at = Time.parse(data['expire_at'])
 
